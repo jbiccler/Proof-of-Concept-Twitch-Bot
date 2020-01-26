@@ -18,7 +18,6 @@ class Channel:
         ircmsg = ""
         while ircmsg.find("End of /NAMES list") == -1:
             ircmsg = ircsock.recv(2048).decode("UTF-8")
-            # ircmsg = ircmsg.strip("nr")
             print(ircmsg)
         print("Successfully joined the channel: " + self.chan)
         ircsock.send(
@@ -49,13 +48,11 @@ class Message:
         self.sendMsg("Hi, @" + self.author.title())
 
     def addCommand(self, msg):
-        print("ss")
         try:
             msg = msg[5:]
             name = msg.split(" ", 1)[0]
             descr = msg.split(" ", 1)[1].replace("'", r"\'").replace('"', r"\"")
             channels[self.channel].commands[name] = f"self.sendMsg('{descr}')"
-            print("added?")
         except:
             self.sendMsg("Invalid syntax, use !add !newCommand <answer>")
 
